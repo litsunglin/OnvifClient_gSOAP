@@ -55,8 +55,22 @@ Generate ONVIF client code base on gSOAP 2.8.98 according to [GENIVIA ONVIF samp
    2. generate `onvif.h` for `C++`
 
       ```bash
-      $ cd gsoap-2.8/gsoap && mkdir samples/onvif
-      $ ./path_to_install/bin/wsdl2h -P -x -s -t typemap.dat -o samples/onvif/onvif.h http://www.onvif.org/onvif/ver10/device/wsdl/devicemgmt.wsdl http://www.onvif.org/onvif/ver10/event/wsdl/event.wsdl https://www.onvif.org/ver10/advancedsecurity/wsdl/advancedsecurity.wsdl https://www.onvif.org/ver20/imaging/wsdl/imaging.wsdl https://www.onvif.org/ver10/media/wsdl/media.wsdl https://www.onvif.org/ver20/ptz/wsdl/ptz.wsdl https://www.onvif.org/ver10/deviceio.wsdl http://www.onvif.org/onvif/ver10/network/wsdl/remotediscovery.wsdl
+      cd gsoap-2.8/gsoap && mkdir samples/onvif
+      # generate onvif.h with media2
+      wsdl2h -c++ -O4 -P -x -o ./onvif.h -t ./typemap.dat \
+         https://www.onvif.org/ver10/advancedsecurity/wsdl/advancedsecurity.wsdl \
+         https://www.onvif.org/ver20/analytics/wsdl/analytics.wsdl \
+         https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl \
+         https://www.onvif.org/ver10/events/wsdl/event.wsdl \
+         https://www.onvif.org/ver20/imaging/wsdl/imaging.wsdl \
+         https://www.onvif.org/ver10/media/wsdl/media.wsdl \
+         https://www.onvif.org/ver20/media/wsdl/media.wsdl \
+         https://www.onvif.org/ver20/ptz/wsdl/ptz.wsdl \
+         https://www.onvif.org/ver10/deviceio.wsdl \
+         https://www.onvif.org/ver10/recording.wsdl \
+         https://www.onvif.org/ver10/search.wsdl \
+         https://www.onvif.org/ver10/replay.wsdl \
+         http://www.onvif.org/onvif/ver10/network/wsdl/remotediscovery.wsdl
       ```
 
       > The `onvif.h` generated if for `C++`, for `C` you should add `-c`

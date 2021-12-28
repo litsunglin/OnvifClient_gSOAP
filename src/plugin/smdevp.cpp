@@ -6,7 +6,7 @@
 gSOAP XML Web services tools
 Copyright (C) 2000-2019, Robert van Engelen, Genivia Inc., All Rights Reserved.
 This part of the software is released under one of the following licenses:
-GPL, the gSOAP public license, or Genivia's license for commercial use.
+GPL or the gSOAP public license.
 --------------------------------------------------------------------------------
 gSOAP public license.
 
@@ -301,7 +301,7 @@ the digest or signature produced.
 
 */
 
-#include "../../include/plugin/smdevp.h"
+#include "smdevp.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -343,7 +343,7 @@ soap_smd_size(int alg, const void *key)
     case SOAP_SMD_SIGN:
     case SOAP_SMD_VRFY:
       /* OpenSSL EVP_PKEY_size returns size of signatures given a key */
-      return EVP_PKEY_size((EVP_PKEY*)key);
+      return (size_t)EVP_PKEY_size((EVP_PKEY*)key);
     case SOAP_SMD_HMAC:
     case SOAP_SMD_DGST:
       switch ((alg & SOAP_SMD_HASH))

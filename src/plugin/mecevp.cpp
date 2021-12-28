@@ -6,7 +6,7 @@
 gSOAP XML Web services tools
 Copyright (C) 2000-2015, Robert van Engelen, Genivia Inc., All Rights Reserved.
 This part of the software is released under one of the following licenses:
-GPL, the gSOAP public license, or Genivia's license for commercial use.
+GPL or the gSOAP public license.
 --------------------------------------------------------------------------------
 gSOAP public license.
 
@@ -285,7 +285,7 @@ mecevp plugin and engine.
 
 */
 
-#include "../../include/plugin/mecevp.h"
+#include "mecevp.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -617,7 +617,11 @@ soap_mec_start_alg(struct soap *soap, int alg, const unsigned char *key)
     ivlen = EVP_CIPHER_iv_length(data->type);
     if (ivlen)
     {
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L)
+      RAND_bytes(iv, ivlen);
+#else
       RAND_pseudo_bytes(iv, ivlen);
+#endif
       soap_mec_put_base64(soap, data, (unsigned char*)iv, ivlen);
     }
     DBGLOG(TEST, SOAP_MESSAGE(fdebug, "IV = "));
@@ -785,7 +789,7 @@ SOAP_FMAC2
 soap_mec_size(int alg, SOAP_MEC_KEY_TYPE *pkey)
 {
   if (alg & SOAP_MEC_ENV)
-    return EVP_PKEY_size(pkey);
+    return (size_t)EVP_PKEY_size(pkey);
   switch (alg & SOAP_MEC_ALGO & ~SOAP_MEC_GCM)
   {
     case SOAP_MEC_DES_CBC:
@@ -875,7 +879,7 @@ soap_mec_upd_enc(struct soap *soap, struct soap_mec_data *data, const char **s, 
   if (m > (int)data->buflen)
   {
     char *t = data->buf;
-    data->buflen = m; /* + slack? */
+    data->buflen = (size_t)m; /* + slack? */
     data->buf = (char*)SOAP_MALLOC(soap, m);
     if (t)
     {

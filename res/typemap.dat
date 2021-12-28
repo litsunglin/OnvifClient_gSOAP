@@ -94,9 +94,10 @@
 #       which replaces all 'float' with 'double' in the wsdl2h output. Beware
 #       that replacing types may lead to xsi:type mismatches and SOAP
 #       encoding id-ref mismatches when parsing inbound XML messages. However,
-#       this is not a problem when using XML instead of SOAP and when mapping
-#       schema root elements to their types, for example the WCF serialization
-#       root element remappings defined further below.
+#       this is not a problem when using XML and doc/lit SOAP instead of
+#       RPC-encoded SOAP and when mapping schema root elements to their types,
+#       for example the WCF serialization root element remappings defined
+#       further below.
 
 ####### BUILT-IN VARIABLES
 
@@ -143,7 +144,7 @@
 #gSOAP XML Web services tools
 #Copyright (C) 2000-2015, Robert van Engelen, Genivia Inc. All Rights Reserved.
 #This software is released under one of the following two licenses:
-#GPL or Genivia's license for commercial use.
+#GPL.
 #-------------------------------------------------------------------------------
 #A commercial use license is available from Genivia, Inc., contact@genivia.com
 #-------------------------------------------------------------------------------
@@ -579,7 +580,6 @@ tt      = "http://www.onvif.org/ver10/schema"
 # trt__ProfileCapabilities = $ @enum xsd__boolean Rotation;
 #       to extend trt__ProfileCapabilities with @Rotation attribute (for C++):
 # trt__ProfileCapabilities = $ @bool Rotation;
-# trt__ProfileCapabilities = $ @bool SnapshotUri;
 
 #       OASIS recommended prefixes
 

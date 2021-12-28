@@ -46,11 +46,13 @@ bool ProbeMatch(std::vector<_ocp__Device> &devices, const int &recv_timeout, con
 
     /* if the netword_card_address is empty ,use default ipaddress */
     if (netword_card_address.length() > 0) {
+        std::cout<<"Probe in "<<netword_card_address<<std::endl;
         struct in_addr if_req;
         if_req.s_addr = inet_addr(netword_card_address.c_str());
 
         if (if_req.s_addr == INADDR_NONE) {
             CLEANUP_SOAP(soap);
+            std::cout<<"INADDR_NONE"<<std::endl;
             return false;
         }
         soap->ipv4_multicast_if = (char *) soap_malloc(soap, sizeof(in_addr));
@@ -65,7 +67,8 @@ bool ProbeMatch(std::vector<_ocp__Device> &devices, const int &recv_timeout, con
     soap->header = &header;
     soap->recv_timeout = recv_timeout >= 0 ? recv_timeout : 3;
 
-    soap_set_namespaces(soap, namespaces);
+    //soap_set_namespaces(soap, namespaces);
+    soap_set_namespaces(soap, NULL);
 
     wsdd__ScopesType scopesType;
     soap_default_wsdd__ScopesType(soap, &scopesType);
@@ -81,12 +84,11 @@ bool ProbeMatch(std::vector<_ocp__Device> &devices, const int &recv_timeout, con
     bool execute_result = true;
 
     if (SOAP_OK == soap_send___wsdd__Probe(soap, soap_endpoint.c_str(), nullptr, &probeType)) {
-
         struct __wsdd__ProbeMatches resp;
+        std::cout<<"Sending probe ..."<<std::endl;
         while (SOAP_OK == soap_recv___wsdd__ProbeMatches(soap, &resp)) {
-            cout << "Probe match" << endl;
+            std::cout<<"Got probe response ..."<<std::endl;
             if (resp.wsdd__ProbeMatches->ProbeMatch) {
-
                 _ocp__Device device;
 
                 if (resp.wsdd__ProbeMatches->ProbeMatch->wsa5__EndpointReference.Address == nullptr) {
@@ -141,7 +143,9 @@ bool ProbeMatch(std::vector<_ocp__Device> &devices, const int &recv_timeout, con
                     devices_map[device.UUID] = device;
                 }
             }
+            std::cout<<"Invalid ProbeMatch ???"<<std::endl;
         }
+        std::cout<<"Got no response in "<<recv_timeout<<" seconds"<<std::endl;
 
         devices.clear();
         for (auto iter : devices_map) {
@@ -160,7 +164,7 @@ bool ProbeMatch(std::vector<_ocp__Device> &devices, const int &recv_timeout, con
 
 int main() {
     vector<_ocp__Device> devices;
-    ProbeMatch(devices, 3, "");
+    ProbeMatch(devices, 3, "172.28.102.221");
     for (auto device : devices) {
         cout << "UUID: " << device.UUID << endl;
     }

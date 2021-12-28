@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.4.1)
 project(OnvifClient_gSOAP)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-DWITH_OPENSSL -DWITH_DOM")
+set(CMAKE_CXX_FLAGS "-DWITH_OPENSSL -DWITH_DOM -DWITH_NONAMESPACES")
 
 include_directories(${PROJECT_SOURCE_DIR}/include
         ${PROJECT_SOURCE_DIR}/include/custom
@@ -28,4 +28,4 @@ set(sourcecode
 add_subdirectory(samples/deviceBinding)
 add_subdirectory(samples/mediaBinding)
 add_subdirectory(samples/ptzBinding)
-#add_subdirectory(samples/remoteDiscovery)
+add_subdirectory(samples/remoteDiscovery)

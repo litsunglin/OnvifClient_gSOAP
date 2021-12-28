@@ -9,3 +9,6 @@ target_link_libraries(${PROJECT_NAME} ssl crypto)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}")
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+add_executable(media2Binding media2Binding.cpp ${sourcecode})
+target_link_libraries(media2Binding ssl crypto)
