@@ -10,6 +10,8 @@
 #include "soapPTZBindingProxy.h"
 #include "common.h"
 
+#include "PTZBinding.nsmap"
+
 using namespace std;
 
 const string username = USERNAME;

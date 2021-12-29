@@ -9,6 +9,8 @@
 #include "soapMedia2BindingProxy.h"
 #include "common.h"
 
+#include "Media2Binding.nsmap"
+
 using namespace std;
 
 const string username = USERNAME;

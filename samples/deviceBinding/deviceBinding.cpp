@@ -8,6 +8,7 @@
 #include "wsseapi.h"
 #include "soapDeviceBindingProxy.h"
 #include "common.h"
+#include "DeviceBinding.nsmap"
 
 using namespace std;
 

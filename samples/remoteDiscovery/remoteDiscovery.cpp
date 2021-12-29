@@ -12,6 +12,7 @@
 #include "wsseapi.h"
 //#include "soapRemoteDiscoveryBindingProxy.h"
 #include "common.h"
+#include "RemoteDiscoveryBinding.nsmap"
 
 using namespace std;
 
@@ -67,8 +68,7 @@ bool ProbeMatch(std::vector<_ocp__Device> &devices, const int &recv_timeout, con
     soap->header = &header;
     soap->recv_timeout = recv_timeout >= 0 ? recv_timeout : 3;
 
-    //soap_set_namespaces(soap, namespaces);
-    soap_set_namespaces(soap, NULL);
+    soap_set_namespaces(soap, namespaces);
 
     wsdd__ScopesType scopesType;
     soap_default_wsdd__ScopesType(soap, &scopesType);
